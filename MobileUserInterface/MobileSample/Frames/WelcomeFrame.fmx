@@ -1,0 +1,20 @@
+object Frame1: TFrame1
+  Height = 491.000000000000000000
+  Width = 315.000000000000000000
+  TabOrder = 0
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    Align = Client
+    Height = 491.000000000000000000
+    HitTest = False
+    TabOrder = 0
+    Width = 315.000000000000000000
+    Lines.Strings = (
+      '- TFrame'#51012' '#51060#50857#54644' '#54868#47732#48324#47196' '#48324#46020' '#44060#48156
+      '- TFrame'#51032' '#48512#51313#54620' '#47700#49548#46300#47484' Interface'#47484' '#53685#54644' '#48372#44053
+      '- '#54868#47732#48324' '#44256#50976#44592#45733' '#51648#50896#51012' Interface'#47196' '#51648#50896
+      '- '#49436#46989#54805' '#51340#52769#47700#45684' '#44592#45733)
+    TextSettings.Font.Size = 14.000000000000000000
+    StyledSettings = [Family, Style, FontColor]
+  end
+end

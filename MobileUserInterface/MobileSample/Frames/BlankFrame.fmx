@@ -1,0 +1,34 @@
+object fmBlank: TfmBlank
+  Height = 430.000000000000000000
+  Width = 344.000000000000000000
+  TabOrder = 0
+  object Button1: TButton
+    Height = 22.000000000000000000
+    Position.X = 24.000000000000000000
+    Position.Y = 24.000000000000000000
+    TabOrder = 0
+    Text = 'Button1'
+    Width = 80.000000000000000000
+    OnClick = Button1Click
+  end
+  object Edit1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Position.X = 192.000000000000000000
+    Position.Y = 24.000000000000000000
+    Width = 100.000000000000000000
+    Height = 22.000000000000000000
+  end
+  object Label1: TLabel
+    Height = 33.000000000000000000
+    Position.X = 120.000000000000000000
+    Position.Y = 19.000000000000000000
+    Text = #54788#51116#49884#44036
+    Width = 120.000000000000000000
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 160
+    Top = 200
+  end
+end

@@ -1,0 +1,95 @@
+object fmSetting: TfmSetting
+  Height = 565.000000000000000000
+  Width = 393.000000000000000000
+  TabOrder = 0
+  object ListBox1: TListBox
+    Align = Client
+    Height = 565.000000000000000000
+    TabOrder = 0
+    Width = 393.000000000000000000
+    DefaultItemStyles.ItemStyle = 'listboxitemnodetail'
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    object ListBoxGroupHeader1: TListBoxGroupHeader
+      Height = 30.000000000000000000
+      TabOrder = 0
+      Text = 'Socket server information'
+      Width = 389.000000000000000000
+    end
+    object ListBoxItem1: TListBoxItem
+      Height = 44.000000000000000000
+      Position.Y = 30.000000000000000000
+      StyleLookup = 'listboxitemnodetail'
+      TabOrder = 1
+      Text = 'Hostname'
+      Width = 389.000000000000000000
+      object edtSockHost: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Scale
+        TabOrder = 0
+        Position.X = 138.311111450195300000
+        Position.Y = 6.000000000000000000
+        Width = 234.480575561523400000
+        Height = 32.000000000000000000
+      end
+    end
+    object ListBoxItem2: TListBoxItem
+      Height = 44.000000000000000000
+      Position.Y = 74.000000000000000000
+      StyleLookup = 'listboxitemnodetail'
+      TabOrder = 2
+      Text = 'Port'
+      Width = 389.000000000000000000
+      object edtSockPort: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Scale
+        TabOrder = 0
+        Position.X = 138.311111450195300000
+        Position.Y = 6.000000000000000000
+        Width = 234.480575561523400000
+        Height = 32.000000000000000000
+      end
+    end
+    object ListBoxGroupHeader2: TListBoxGroupHeader
+      Height = 30.000000000000000000
+      Position.Y = 118.000000000000000000
+      TabOrder = 3
+      Text = 'DataSnap Server information'
+      Width = 389.000000000000000000
+    end
+    object ListBoxItem4: TListBoxItem
+      Height = 44.000000000000000000
+      Position.Y = 148.000000000000000000
+      StyleLookup = 'listboxitemnodetail'
+      TabOrder = 4
+      Text = 'Hostname'
+      Width = 389.000000000000000000
+      object edtDSHost: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Scale
+        TabOrder = 0
+        Position.X = 138.311111450195300000
+        Position.Y = 6.000000000000000000
+        Width = 234.480575561523400000
+        Height = 32.000000000000000000
+      end
+    end
+    object ListBoxItem3: TListBoxItem
+      Height = 44.000000000000000000
+      Position.Y = 192.000000000000000000
+      StyleLookup = 'listboxitemnodetail'
+      TabOrder = 5
+      Text = 'Port'
+      Width = 389.000000000000000000
+      object edtDSPort: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Scale
+        TabOrder = 0
+        Position.X = 138.311111450195300000
+        Position.Y = 6.000000000000000000
+        Width = 234.480575561523400000
+        Height = 32.000000000000000000
+      end
+    end
+  end
+end
