@@ -266,9 +266,6 @@ begin
     lytMenuHelper.Repaint;
     Log.d('Set - HideMenu');
   end;
-
-  //
-  lytMenuHelper.TagString := '';
 end;
 
 procedure TForm1.lstSidebarMenuItemClick(const Sender: TCustomListBox;
@@ -318,7 +315,6 @@ procedure TForm1.lytMenuHelperMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
   FMenuHelperDown := True;
-  lytMenuHelper.TagString := 'Down';
   Log.d('TForm1.lytMenuHelperMouseDown');
 end;
 
@@ -399,15 +395,19 @@ begin
         // Android의 경우 첫번째 EventInfo.Location과 FSwipeData.MouseDownPos가 같음
         if MovePos = PointF(0, 0) then
           Exit;
+        Log.d('10 이상 %f, %d, %f', [Abs(MovePos.X), SWIPE_MOVE_MINVALUE, Abs(MovePos.Y) * 2]);
         // 10이상 움직인경우 시작
-        if (Abs(MovePos.X) > SWIPE_MOVE_MINVALUE) and (Abs(MovePos.X) > Abs(MovePos.Y) * 2) then
+        if (Abs(MovePos.X) > SWIPE_MOVE_MINVALUE) then
         begin
-          FSwipeData.Direction := TSwipeDirection.Horizontal;
-          DoSwipeBegin(FSwipeData.MouseDownPos);
-        end
-        else
-        begin
-          FSwipeData.Direction := TSwipeDirection.Etc;
+          if (Abs(MovePos.X) > Abs(MovePos.Y) * 2) then
+          begin
+            FSwipeData.Direction := TSwipeDirection.Horizontal;
+            DoSwipeBegin(FSwipeData.MouseDownPos);
+          end
+          else
+          begin
+            FSwipeData.Direction := TSwipeDirection.Etc;
+          end;
         end;
       end;
 
@@ -448,6 +448,8 @@ var
   SwipeEvent: ISupportSwipeEvent;
   B: Boolean;
 begin
+  Log.d('TForm1.DoSwipeBegin');
+
   FSwipeBeginStopWatch.Reset;
   FSwipeBeginStopWatch.Start;
   if Assigned(FCurrentMenu) and Supports(FCurrentMenu.View, ISupportSwipeEvent, SwipeEvent) then
