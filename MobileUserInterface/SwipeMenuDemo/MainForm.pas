@@ -77,7 +77,6 @@ type
     TSwipeData = record
       private
         Direction: TSwipeDirection;
-        MouseDown: Boolean;
         MouseDownPos: TPointF;
     end;
   private
@@ -172,7 +171,6 @@ begin
 
   MakeMenu;
 
-  FSwipeData.MouseDown := False;
   FSwipeData.MouseDownPos := PointF(0, 0);
 
   FInit := True;
@@ -380,7 +378,6 @@ begin
     if TInteractiveGestureFlag.gfBegin in EventInfo.Flags then
     begin
       FSwipeData.Direction := TSwipeDirection.None;
-      FSwipeData.MouseDown := True;
       FSwipeData.MouseDownPos := EventInfo.Location;
     end
     // Touch event 이동
@@ -395,7 +392,6 @@ begin
         // Android의 경우 첫번째 EventInfo.Location과 FSwipeData.MouseDownPos가 같음
         if MovePos = PointF(0, 0) then
           Exit;
-        Log.d('10 이상 %f, %d, %f', [Abs(MovePos.X), SWIPE_MOVE_MINVALUE, Abs(MovePos.Y) * 2]);
         // 10이상 움직인경우 시작
         if (Abs(MovePos.X) > SWIPE_MOVE_MINVALUE) then
         begin
@@ -420,7 +416,6 @@ begin
       if FSwipeData.Direction = TSwipeDirection.Horizontal then
         DoSwipeEnd(EventInfo.Location);
       FSwipeData.Direction := TSwipeDirection.None;
-      FSwipeData.MouseDown := False;
     end;
   end;
 end;
