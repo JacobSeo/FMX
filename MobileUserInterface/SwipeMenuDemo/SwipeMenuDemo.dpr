@@ -1,4 +1,4 @@
-program MobileSamples;
+program SwipeMenuDemo;
 
 
 
@@ -19,6 +19,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.FormFactor.Orientations := [TFormOrientation.Portrait];
   Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.

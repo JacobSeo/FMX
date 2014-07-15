@@ -3,10 +3,10 @@
         <ProjectGuid>{1D2300C7-17DA-4750-80CA-96B378EB1324}</ProjectGuid>
         <ProjectVersion>15.4</ProjectVersion>
         <FrameworkType>FMX</FrameworkType>
-        <MainSource>MobileSamples.dpr</MainSource>
+        <MainSource>SwipeMenuDemo.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">iOSSimulator</Platform>
+        <Platform Condition="'$(Platform)'==''">iOSDevice</Platform>
         <TargetedPlatforms>89</TargetedPlatforms>
         <AppType>Application</AppType>
     </PropertyGroup>
@@ -38,6 +38,12 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='iOSDevice' and '$(Cfg_1)'=='true') or '$(Cfg_1_iOSDevice)'!=''">
+        <Cfg_1_iOSDevice>true</Cfg_1_iOSDevice>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
         <Cfg_1_Win32>true</Cfg_1_Win32>
         <CfgParent>Cfg_1</CfgParent>
@@ -53,7 +59,7 @@
         <AUP_CALL_PHONE>true</AUP_CALL_PHONE>
         <AUP_READ_PHONE_STATE>true</AUP_READ_PHONE_STATE>
         <AUP_CAMERA>true</AUP_CAMERA>
-        <SanitizedProjectName>MobileSamples</SanitizedProjectName>
+        <SanitizedProjectName>SwipeMenuDemo</SanitizedProjectName>
         <AUP_READ_CALENDAR>true</AUP_READ_CALENDAR>
         <AUP_ACCESS_COARSE_LOCATION>true</AUP_ACCESS_COARSE_LOCATION>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
@@ -171,6 +177,11 @@
         <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_iOSDevice)'!=''">
+        <VerInfo_BundleId>$(MSBuildProjectName)</VerInfo_BundleId>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_UIDeviceFamily>iPhoneAndiPad</VerInfo_UIDeviceFamily>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -235,7 +246,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">MobileSamples.dpr</Source>
+                    <Source Name="MainSource">SwipeMenuDemo.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
@@ -303,9 +314,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="iOSSimulator\Debug\InterfacedFrameDemo" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="iOSSimulator\Debug\SwipeMenuDemo" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="iOSSimulator">
-                        <RemoteName>InterfacedFrameDemo</RemoteName>
+                        <RemoteName>SwipeMenuDemo</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -338,12 +349,6 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\iOS\iPhone\FM_ApplicationIcon_114x114.png" Configuration="Debug" Class="iPhone_AppIcon114">
                     <Platform Name="iOSDevice">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="iOSDevice\Debug\InterfacedFrameDemo.dSYM" Configuration="Debug" Class="ProjectiOSDeviceDebug">
-                    <Platform Name="iOSDevice">
-                        <RemoteName>InterfacedFrameDemo</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -407,21 +412,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="iOSSimulator\Debug\InterfacedFrameDemo.info.plist" Configuration="Debug" Class="ProjectiOSSimulatorInfoPList">
+                <DeployFile LocalName="$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImageLandscape_2048x1496.png" Configuration="Debug" Class="iPad_Launch2048">
                     <Platform Name="iOSSimulator">
-                        <RemoteName>Info.plist</RemoteName>
+                        <RemoteName>Default-Landscape@2x.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="iOSDevice\Base\FrameMenuDemo.dSYM" Configuration="Base" Class="ProjectiOSDeviceDebug">
                     <Platform Name="iOSDevice">
                         <RemoteName>FrameMenuDemo</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImageLandscape_2048x1496.png" Configuration="Debug" Class="iPad_Launch2048">
-                    <Platform Name="iOSSimulator">
-                        <RemoteName>Default-Landscape@2x.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -459,26 +458,32 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="iOSSimulator\Debug\SwipeMenuDemo.entitlements" Configuration="Debug" Class="ProjectiOSEntitlements">
+                    <Platform Name="iOSSimulator">
+                        <RemoteName>Entitlements.plist</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\14.0\PlatformSDKs\android-ndk-r9c\prebuilt\android-arm\gdbserver\gdbserver" Configuration="Debug" Class="AndroidGDBServer">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="iOSDevice\Debug\InterfacedFrameDemo.info.plist" Configuration="Debug" Class="ProjectiOSDeviceInfoPList">
-                    <Platform Name="iOSDevice">
-                        <RemoteName>Info.plist</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="iOSSimulator\Debug\InterfacedFrameDemo.rsm" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="iOSSimulator\Debug\SwipeMenuDemo.info.plist" Configuration="Debug" Class="ProjectiOSSimulatorInfoPList">
                     <Platform Name="iOSSimulator">
-                        <RemoteName>InterfacedFrameDemo.rsm</RemoteName>
+                        <RemoteName>Info.plist</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImagePortrait_1536x2008.png" Configuration="Debug" Class="iPad_Launch1536">
                     <Platform Name="iOSDevice">
                         <RemoteName>Default-Portrait@2x.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="iOSDevice\Debug\SwipeMenuDemo" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="iOSDevice">
+                        <RemoteName>SwipeMenuDemo</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -504,7 +509,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="iOSSimulator">
-                        <RemoteDir>assets\internal</RemoteDir>
+                        <RemoteDir>StartUp\Documents\Res</RemoteDir>
                         <RemoteName>Socket.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -551,12 +556,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="iOSSimulator\Debug\InterfacedFrameDemo.entitlements" Configuration="Debug" Class="ProjectiOSEntitlements">
-                    <Platform Name="iOSSimulator">
-                        <RemoteName>Entitlements.plist</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\iOS\iPhone\FM_SpotlightSearchIcon_29x29.png" Configuration="Debug" Class="iPhone_Spotlight29">
                     <Platform Name="iOSDevice">
                         <Overwrite>true</Overwrite>
@@ -584,6 +583,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="iOSDevice\Debug\MobileSamples.dSYM" Configuration="Debug" Class="ProjectiOSDeviceDebug">
+                    <Platform Name="iOSDevice">
+                        <RemoteName>MobileSamples</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="resources\search.png" Class="File">
                     <Platform Name="Android">
                         <RemoteDir>assets\internal\Res</RemoteDir>
@@ -600,7 +605,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="iOSSimulator">
-                        <RemoteDir>assets\internal</RemoteDir>
+                        <RemoteDir>StartUp\Documents\Res</RemoteDir>
                         <RemoteName>search.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -621,7 +626,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                     <Platform Name="iOSSimulator">
-                        <RemoteDir>assets\internal</RemoteDir>
+                        <RemoteDir>StartUp\Documents\Res</RemoteDir>
                         <RemoteName>setting.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -696,12 +701,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="iOSDevice\Debug\InterfacedFrameDemo.entitlements" Configuration="Debug" Class="ProjectiOSEntitlements">
-                    <Platform Name="iOSDevice">
-                        <RemoteName>Entitlements.plist</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\iOS\iPad\FM_SettingIcon_29x29.png" Configuration="Debug" Class="iPad_Setting29">
                     <Platform Name="iOSSimulator">
                         <Overwrite>true</Overwrite>
@@ -709,6 +708,12 @@
                 </DeployFile>
                 <DeployFile LocalName="Android\Base\AndroidManifest.xml" Configuration="Base" Class="ProjectAndroidManifest">
                     <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="iOSDevice\Debug\MobileSamples.entitlements" Configuration="Debug" Class="ProjectiOSEntitlements">
+                    <Platform Name="iOSDevice">
+                        <RemoteName>Entitlements.plist</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -751,12 +756,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="iOSDevice\Debug\InterfacedFrameDemo" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="iOSDevice">
-                        <RemoteName>InterfacedFrameDemo</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\iOS\iPad\FM_LaunchImageLandscape_2048x1536.png" Configuration="Debug" Class="iPad_Launch2048x1536">
                     <Platform Name="iOSSimulator">
                         <RemoteName>Default-Landscape@2x~ipad.png</RemoteName>
@@ -781,9 +780,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Android\Debug\libInterfacedFrameDemo.so" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Android\Debug\libMobileSamples.so" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Android">
-                        <RemoteName>libInterfacedFrameDemo.so</RemoteName>
+                        <RemoteName>libMobileSamples.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -816,9 +815,21 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="iOSSimulator\Debug\SwipeMenuDemo.rsm" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="iOSSimulator">
+                        <RemoteName>SwipeMenuDemo.rsm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="iOSDevice\Debug\ResourceRules.plist" Configuration="Debug" Class="ProjectiOSDeviceResourceRules">
                     <Platform Name="iOSDevice">
                         <RemoteName>ResourceRules.plist</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="iOSDevice\Debug\MobileSamples.info.plist" Configuration="Debug" Class="ProjectiOSDeviceInfoPList">
+                    <Platform Name="iOSDevice">
+                        <RemoteName>Info.plist</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1120,7 +1131,7 @@
             </Deployment>
             <Platforms>
                 <Platform value="Android">True</Platform>
-                <Platform value="iOSDevice">True</Platform>
+                <Platform value="iOSDevice" ActiveMobileDevice="%iosdevice%93430cf83f73f67454fde4fcc35d49ff284d483b">True</Platform>
                 <Platform value="iOSSimulator" ActiveMobileDevice="iPhone">True</Platform>
                 <Platform value="Win32">True</Platform>
             </Platforms>

@@ -11,7 +11,7 @@ uses
   CommonInterface;
 
 type
-  TfmSearch = class(TFrame, IFrameView, ISearchFeature)
+  TfmSearch = class(TFrame, IFrameView, ISearchFeature, ISupportSwipeEvent)
     ListView1: TListView;
     PrototypeBindSource1: TPrototypeBindSource;
     BindingsList1: TBindingsList;
@@ -29,7 +29,13 @@ type
     procedure PauseWork;  // 메뉴를 표시하는 경우 작업 멈춤
     procedure ResumeWork;
 
+    { ISearchFeature }
     procedure Search;
+
+    { ISupportSwipeEvent }
+    procedure SwipeBegin(const AStartPos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure SwipeEnd(const AEndPos: TPointF; var AIsInterceptEvent: Boolean);
   public
     { Public declarations }
   end;
@@ -84,6 +90,25 @@ end;
 procedure TfmSearch.ShowFrame;
 begin
 
+end;
+
+procedure TfmSearch.Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
+begin
+  AIsInterceptEvent := False;
+end;
+
+procedure TfmSearch.SwipeBegin(const AStartPos: TPointF;
+  var AIsInterceptEvent: Boolean);
+begin
+  AIsInterceptEvent := False;
+  ListView1.Enabled := False;
+end;
+
+procedure TfmSearch.SwipeEnd(const AEndPos: TPointF;
+  var AIsInterceptEvent: Boolean);
+begin
+  AIsInterceptEvent := False;
+  ListView1.Enabled := True;
 end;
 
 // add initialization(RegisterClass)

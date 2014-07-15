@@ -3,9 +3,10 @@ unit CommonInterface;
 interface
 
 uses
-  FMX.Forms, FMX.Graphics;
+  FMX.Forms, FMX.Graphics, System.Types;
 
 type
+  // Frame Interface
   IFrameView = interface
    ['{62BE91AB-E9CC-4E13-91E7-8C5F42E6E7E3}']
     procedure CreateFrame;  // Frame 생성 시 호출
@@ -21,6 +22,7 @@ type
     procedure ResumeWork; // 메뉴를 감추는 경우 작업 재진행
   end;
 
+  // Feature Interface
   ISearchFeature = interface
   ['{5D1E9F09-0A7A-4040-BB4A-B4C013E44B2A}']
     procedure Search;
@@ -34,6 +36,14 @@ type
   IConnectFeature = interface
   ['{104E89EC-3A00-43CB-8961-FEC6F2013071}']
     procedure Connect(Sender: TObject);
+  end;
+
+  // Swipe Event Interface
+  ISupportSwipeEvent = interface
+  ['{152551D7-6455-4439-BEF8-4345811D5900}']
+    procedure SwipeBegin(const AStartPos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure SwipeEnd(const AEndPos: TPointF; var AIsInterceptEvent: Boolean);
   end;
 
   TFrameMenuData = class

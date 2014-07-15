@@ -8,7 +8,7 @@ uses
   FMX.Edit, FMX.ListBox, FMX.Layouts, CommonInterface;
 
 type
-  TfmSetting = class(TFrame, IFrameView, ISaveFeature)
+  TfmSetting = class(TFrame, IFrameView, ISaveFeature, ISupportSwipeEvent)
     ListBox1: TListBox;
     ListBoxGroupHeader1: TListBoxGroupHeader;
     ListBoxItem1: TListBoxItem;
@@ -22,6 +22,8 @@ type
     edtDSPort: TEdit;
   private
     { Private declarations }
+
+    FTouchTracking: TTouchTracking;
     { IFrameInf }
     procedure CreateFrame;
     procedure DestroyFrame;
@@ -35,6 +37,11 @@ type
 
     { ISaveFeature }
     procedure Save;
+
+    { ISupportSwipeEvent }
+    procedure SwipeBegin(const AStartPos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure SwipeEnd(const AEndPos: TPointF; var AIsInterceptEvent: Boolean);
   public
     { Public declarations }
   end;
@@ -92,6 +99,26 @@ end;
 procedure TfmSetting.ShowFrame;
 begin
 
+end;
+
+procedure TfmSetting.Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
+begin
+  AIsInterceptEvent := False;
+end;
+
+procedure TfmSetting.SwipeBegin(const AStartPos: TPointF;
+  var AIsInterceptEvent: Boolean);
+begin
+  AIsInterceptEvent := False;
+  FTouchTracking := ListBox1.AniCalculations.TouchTracking;
+  ListBox1.AniCalculations.TouchTracking := [];
+end;
+
+procedure TfmSetting.SwipeEnd(const AEndPos: TPointF;
+  var AIsInterceptEvent: Boolean);
+begin
+  AIsInterceptEvent := False;
+  ListBox1.AniCalculations.TouchTracking := FTouchTracking;
 end;
 
 initialization
