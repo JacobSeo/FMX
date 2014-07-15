@@ -190,7 +190,6 @@
             <Form>Form1</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="Libararies\CommonInterface.pas"/>
         <DCCReference Include="Frames\BlankFrame.pas">
             <Form>fmBlank</Form>
             <FormType>fmx</FormType>
@@ -201,7 +200,6 @@
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Libararies\Environment.pas"/>
         <DCCReference Include="Frames\SearchFrame.pas">
             <Form>fmSearch</Form>
             <FormType>fmx</FormType>
@@ -217,6 +215,8 @@
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="Libraries\CommonInterface.pas"/>
+        <DCCReference Include="Libraries\Environment.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
