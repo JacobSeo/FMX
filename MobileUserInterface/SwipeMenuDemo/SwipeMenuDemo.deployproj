@@ -36,6 +36,14 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="iOSDevice\Debug\SwipeMenuDemo.dSYM" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF\</RemoteDir>
+            <RemoteName>SwipeMenuDemo</RemoteName>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="$(BDS)\bin\Artwork\iOS\iPhone\FM_ApplicationIcon_114x114.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>SwipeMenuDemo.app\</RemoteDir>
             <RemoteName>FM_ApplicationIcon_114x114.png</RemoteName>
@@ -95,6 +103,14 @@
         <DeployFile Include="$(BDS)\bin\Artwork\iOS\iPhone\FM_LaunchImage_320x480.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>SwipeMenuDemo.app\</RemoteDir>
             <RemoteName>Default.png</RemoteName>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="iOSDevice\Debug\SwipeMenuDemo.entitlements" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>SwipeMenuDemo.app\</RemoteDir>
+            <RemoteName>Entitlements.plist</RemoteName>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -173,14 +189,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="iOSDevice\Debug\SwipeMenuDemo.dSYM" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF\</RemoteDir>
-            <RemoteName>SwipeMenuDemo</RemoteName>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="resources\search.png">
             <RemoteDir>SwipeMenuDemo.app\StartUp\Documents\Res\</RemoteDir>
             <RemoteName>search.png</RemoteName>
@@ -213,9 +221,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="iOSDevice\Debug\SwipeMenuDemo.entitlements" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="iOSDevice\Debug\SwipeMenuDemo.info.plist" Condition="'$(Config)'=='Debug'">
             <RemoteDir>SwipeMenuDemo.app\</RemoteDir>
-            <RemoteName>Entitlements.plist</RemoteName>
+            <RemoteName>Info.plist</RemoteName>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -317,14 +325,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
             <Required>True</Required>
-        </DeployFile>
-        <DeployFile Include="iOSDevice\Debug\SwipeMenuDemo.info.plist" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>SwipeMenuDemo.app\</RemoteDir>
-            <RemoteName>Info.plist</RemoteName>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
         </DeployFile>
     </ItemGroup>
     <ItemGroup Condition="'$(Platform)'=='Android'">

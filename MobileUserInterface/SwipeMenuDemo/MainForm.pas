@@ -68,8 +68,6 @@ type
     procedure FormGesture(Sender: TObject; const EventInfo: TGestureEventInfo;
       var Handled: Boolean);
     procedure btnMenuClick(Sender: TObject);
-    procedure lytMenuHelperMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Single);
     procedure lytMenuHelperMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
   private type
@@ -77,7 +75,7 @@ type
     TSwipeData = record
       private
         Direction: TSwipeDirection;
-        MouseDownPos: TPointF;
+        StartPos: TPointF;
     end;
   private
     { Private declarations }
@@ -88,7 +86,9 @@ type
     FCurrentMenu: TFrameMenuData;
 
     FSwipeData: TSwipeData;
-    FSwipeStartPos: TPointF;
+//    FSwipeStartPos: TPointF;
+    // Swipe 시에도 MenuHelper의 클릭이벤트가 발생
+    //  - MenuHelper의 MouseDown 이후 발생되는 Click인 경우만 정상클릭으로 처리
     FMenuHelperDown: Boolean;
     FSwipeBeginStopWatch: TStopWatch;
 
@@ -102,7 +102,7 @@ type
     function HandleAppEvent(AAppEvent: TApplicationEvent; AContext: TObject): Boolean;
 
     procedure DoSwipeBegin(const P: TPointF);
-    procedure DoSwipe(const P: TPointF);
+    procedure DoSwipeMove(const P: TPointF);
     procedure DoSwipeEnd(const P: TPointF);
   public
     property ShowMenu: Boolean read FShowMenu write SetShowMenu;
@@ -171,7 +171,7 @@ begin
 
   MakeMenu;
 
-  FSwipeData.MouseDownPos := PointF(0, 0);
+  FSwipeData.StartPos := PointF(0, 0);
 
   FInit := True;
 end;
@@ -227,7 +227,8 @@ begin
     Item.TagObject := Menu;
   end;
 
-  lstSidebarMenu.AniCalculations.TouchTracking := [];
+  // 메뉴의 경우 처음/마지막에서 튕김 애니매이션 표현안하도록
+  lstSidebarMenu.AniCalculations.BoundsAnimation := False;
 
   lytSidebar.Width := Max(Self.Width * SIDEBAR_WIDTH_RATE, SIDEBAR_WIDTH_MAX);
   lytSidebar.Position.Point := PointF(-lytSidebar.Width, 0);
@@ -308,30 +309,19 @@ begin
   ShowMenu := False;
 end;
 
-// 메뉴가 표시되면 다른영역을 선택해도 메뉴가 닫히도록 처리
 procedure TForm1.lytMenuHelperMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
+  // MenuHelper의 MouseDown 이후 발생되는 Click인 경우만 정상클릭으로 처리
   FMenuHelperDown := True;
-  Log.d('TForm1.lytMenuHelperMouseDown');
 end;
 
-// Swipe 시에도 Click 이벤트가 발생하므로 MenuHelper에서 이벤트가 시작된 경우만 닫기
+// 사이드바가 표시되면 사이드바 제외한  다른영역을 선택해도 메뉴가 닫히도록 처리
 procedure TForm1.lytMenuHelperClick(Sender: TObject);
 begin
-  Log.d('TForm1.lytMenuHelperClick');
   if FMenuHelperDown then
-  begin
-    Log.d('TForm1.lytMenuHelperClick - ShowMenu False');
     ShowMenu := False;
-  end;
   FMenuHelperDown := False;
-end;
-
-procedure TForm1.lytMenuHelperMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Single);
-begin
-  Log.d('TForm1.lytMenuHelperMouseUp');
 end;
 
 {$REGION 'FeatureInterface'}
@@ -374,11 +364,13 @@ var
 begin
   if EventInfo.GestureID = igiPan then
   begin
+    Handled := True;
+
     // Touch event 시작
     if TInteractiveGestureFlag.gfBegin in EventInfo.Flags then
     begin
       FSwipeData.Direction := TSwipeDirection.None;
-      FSwipeData.MouseDownPos := EventInfo.Location;
+      FSwipeData.StartPos := EventInfo.Location;
     end
     // Touch event 이동
     else if EventInfo.Flags = [] then
@@ -387,18 +379,18 @@ begin
       begin
         // 좌우
 //        MovePos := EventInfo.Location.Subtract(FSwipeData.MouseDownPos);
-        MovePos := EventInfo.Location - FSwipeData.MouseDownPos;
+        MovePos := EventInfo.Location - FSwipeData.StartPos;
 
         // Android의 경우 첫번째 EventInfo.Location과 FSwipeData.MouseDownPos가 같음
         if MovePos = PointF(0, 0) then
           Exit;
         // 10이상 움직인경우 시작
-        if (Abs(MovePos.X) > SWIPE_MOVE_MINVALUE) then
+        if FSwipeData.StartPos.Distance(EventInfo.Location) > SWIPE_MOVE_MINVALUE then
         begin
           if (Abs(MovePos.X) > Abs(MovePos.Y) * 2) then
           begin
             FSwipeData.Direction := TSwipeDirection.Horizontal;
-            DoSwipeBegin(FSwipeData.MouseDownPos);
+            DoSwipeBegin(FSwipeData.StartPos);
           end
           else
           begin
@@ -408,7 +400,7 @@ begin
       end;
 
       if FSwipeData.Direction = TSwipeDirection.Horizontal then
-        DoSwipe(EventInfo.Location);
+        DoSwipeMove(EventInfo.Location);
     end
     // Touch event 끝(손가락을 뗌)
     else if TInteractiveGestureFlag.gfEnd in EventInfo.Flags then
@@ -418,6 +410,24 @@ begin
       FSwipeData.Direction := TSwipeDirection.None;
     end;
   end;
+end;
+
+procedure TForm1.DoSwipeBegin(const P: TPointF);
+var
+  SwipeEvent: ISupportSwipeEvent;
+  Handled: Boolean;
+begin
+  Handled := False;
+  if Assigned(FCurrentMenu) and Supports(FCurrentMenu.View, ISupportSwipeEvent, SwipeEvent) then
+    SwipeEvent.SwipeBegin(P, Handled);
+
+  if Handled then
+    Exit;
+
+  Log.d('TForm1.DoSwipeBegin');
+
+  FSwipeBeginStopWatch := TStopWatch.StartNew;
+  FMenuHelperDown := False;
 end;
 
 procedure TForm1.SetMenuPosition(const Value: Single);
@@ -434,54 +444,43 @@ begin
   end;
 
   lytMenuHelper.Visible := True;
-  Rectangle1.Opacity := ((lytSidebar.Width + lytSidebar.Position.X) / lytSidebar.Width) * MENUHELPER_OPACITY;
-  Rectangle1.Repaint;
+  lytMenuHelper.Opacity := ((lytSidebar.Width + lytSidebar.Position.X) / lytSidebar.Width) * MENUHELPER_OPACITY;
 end;
 
-procedure TForm1.DoSwipeBegin(const P: TPointF);
-var
-  SwipeEvent: ISupportSwipeEvent;
-  B: Boolean;
-begin
-  Log.d('TForm1.DoSwipeBegin');
-
-  FSwipeBeginStopWatch.Reset;
-  FSwipeBeginStopWatch.Start;
-  if Assigned(FCurrentMenu) and Supports(FCurrentMenu.View, ISupportSwipeEvent, SwipeEvent) then
-    SwipeEvent.SwipeBegin(P, B);
-
-  FSwipeStartPos := P;
-
-  FMenuHelperDown := False;
-end;
-
-procedure TForm1.DoSwipe(const P: TPointF);
+procedure TForm1.DoSwipeMove(const P: TPointF);
 var
   MovePos: TPointF;
 
   SwipeEvent: ISupportSwipeEvent;
-  B: Boolean;
+  Handled: Boolean;
 begin
+  Handled := False;
   if Assigned(FCurrentMenu) and Supports(FCurrentMenu.View, ISupportSwipeEvent, SwipeEvent) then
-    SwipeEvent.Swipe(P, B);
+    SwipeEvent.SwipeMove(P, Handled);
+
+  if Handled then
+    Exit;
 
 //  MovePos := P.Subtract(FSwipeStartPos);
-  MovePos := P - FSwipeStartPos;
+  MovePos := P - FSwipeData.StartPos;
   SetMenuPosition(MovePos.X);
-  Log.d('DoSwipe : %f - %f', [FSwipeStartPos.X, P.X]);
+  Log.d('DoSwipe : %f - %f', [FSwipeData.StartPos.X, P.X]);
 end;
 
 procedure TForm1.DoSwipeEnd(const P: TPointF);
 var
   MovePos: TPointF;
   SwipeEvent: ISupportSwipeEvent;
-  B: Boolean;
+  Handled: Boolean;
 begin
+  Handled := False;
   if Assigned(FCurrentMenu) and Supports(FCurrentMenu.View, ISupportSwipeEvent, SwipeEvent) then
-    SwipeEvent.SwipeEnd(P, B);
+    SwipeEvent.SwipeEnd(P, Handled);
 
-//  MovePos := P.Subtract(FSwipeStartPos);
-  MovePos := P - FSwipeStartPos;
+  if Handled then
+    Exit;
+
+  MovePos := P - FSwipeData.StartPos;
   SetMenuPosition(MovePos.X);
 
 //  Log.d('DoSwipeEnd : %f > %f(SW: %d)', [lytSidebar.Width + lytSidebar.Position.X, Self.Width * 0.4, FSwipeBeginStopWatch.ElapsedMilliseconds]);

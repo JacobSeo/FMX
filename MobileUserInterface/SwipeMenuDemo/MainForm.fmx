@@ -79,6 +79,7 @@ object Form1: TForm1
   object lytMenuHelper: TLayout
     Height = 50.000000000000000000
     HitTest = True
+    Opacity = 0.800000011920929000
     Position.X = 16.000000000000000000
     Position.Y = 472.000000000000000000
     Visible = False
@@ -86,13 +87,11 @@ object Form1: TForm1
     TabOrder = 3
     OnClick = lytMenuHelperClick
     OnMouseDown = lytMenuHelperMouseDown
-    OnMouseUp = lytMenuHelperMouseUp
     object Rectangle1: TRectangle
       Align = Client
       Fill.Color = claGray
       Height = 50.000000000000000000
       HitTest = False
-      Opacity = 0.800000011920929000
       Stroke.Kind = None
       Width = 50.000000000000000000
     end

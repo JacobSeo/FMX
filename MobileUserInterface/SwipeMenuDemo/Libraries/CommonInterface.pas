@@ -41,9 +41,9 @@ type
   // Swipe Event Interface
   ISupportSwipeEvent = interface
   ['{152551D7-6455-4439-BEF8-4345811D5900}']
-    procedure SwipeBegin(const AStartPos: TPointF; var AIsInterceptEvent: Boolean);
-    procedure Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
-    procedure SwipeEnd(const AEndPos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure SwipeBegin(const AStartPos: TPointF; var Handled: Boolean);
+    procedure SwipeMove(const AMovePos: TPointF; var Handled: Boolean);
+    procedure SwipeEnd(const AEndPos: TPointF; var Handled: Boolean);
   end;
 
   TFrameMenuData = class

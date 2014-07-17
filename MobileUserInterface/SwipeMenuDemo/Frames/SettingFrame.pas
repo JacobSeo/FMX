@@ -23,7 +23,6 @@ type
   private
     { Private declarations }
 
-    FTouchTracking: TTouchTracking;
     { IFrameInf }
     procedure CreateFrame;
     procedure DestroyFrame;
@@ -39,9 +38,9 @@ type
     procedure Save;
 
     { ISupportSwipeEvent }
-    procedure SwipeBegin(const AStartPos: TPointF; var AIsInterceptEvent: Boolean);
-    procedure Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
-    procedure SwipeEnd(const AEndPos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure SwipeBegin(const AStartPos: TPointF; var Handled: Boolean);
+    procedure SwipeMove(const APos: TPointF; var Handled: Boolean);
+    procedure SwipeEnd(const AEndPos: TPointF; var Handled: Boolean);
   public
     { Public declarations }
   end;
@@ -61,6 +60,10 @@ begin
   edtSockPort.Text := Env.SockPort.ToString;
   edtDSHost.Text := Env.DSHost;
   edtDSPort.Text := Env.DSPort.ToString;
+
+  // 스크롤 방지
+  ListBox1.AniCalculations.TouchTracking := [];
+  ListBox1.Touch.InteractiveGestures := Touch.InteractiveGestures - [TInteractiveGesture.Pan];
 end;
 
 procedure TfmSetting.DestroyFrame;
@@ -101,24 +104,23 @@ begin
 
 end;
 
-procedure TfmSetting.Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
+procedure TfmSetting.SwipeBegin(const AStartPos: TPointF;
+  var Handled: Boolean);
 begin
-  AIsInterceptEvent := False;
+  Handled := False;
+  ListBox1.HitTest := False;
 end;
 
-procedure TfmSetting.SwipeBegin(const AStartPos: TPointF;
-  var AIsInterceptEvent: Boolean);
+procedure TfmSetting.SwipeMove(const APos: TPointF; var Handled: Boolean);
 begin
-  AIsInterceptEvent := False;
-  FTouchTracking := ListBox1.AniCalculations.TouchTracking;
-  ListBox1.AniCalculations.TouchTracking := [];
+  Handled := False;
 end;
 
 procedure TfmSetting.SwipeEnd(const AEndPos: TPointF;
-  var AIsInterceptEvent: Boolean);
+  var Handled: Boolean);
 begin
-  AIsInterceptEvent := False;
-  ListBox1.AniCalculations.TouchTracking := FTouchTracking;
+  Handled := False;
+  ListBox1.HitTest := True;
 end;
 
 initialization

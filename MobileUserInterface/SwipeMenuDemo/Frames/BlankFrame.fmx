@@ -28,7 +28,20 @@ object fmBlank: TfmBlank
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    Left = 160
-    Top = 200
+    Left = 296
+    Top = 48
+  end
+  object ScrollBox1: TScrollBox
+    Height = 201.000000000000000000
+    Position.X = 40.000000000000000000
+    Position.Y = 112.000000000000000000
+    TabOrder = 6
+    Width = 273.000000000000000000
+    object Rectangle1: TRectangle
+      Height = 241.000000000000000000
+      Position.X = -8.000000000000000000
+      Position.Y = -8.000000000000000000
+      Width = 297.000000000000000000
+    end
   end
 end

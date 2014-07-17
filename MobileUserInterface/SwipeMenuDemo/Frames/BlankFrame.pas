@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   // Add interface unit
-  CommonInterface, FMX.Edit;
+  CommonInterface, FMX.Edit, FMX.Objects, FMX.Layouts;
 
 type
   TfmBlank = class(TFrame, IFrameView)
@@ -14,6 +14,8 @@ type
     Timer1: TTimer;
     Edit1: TEdit;
     Label1: TLabel;
+    ScrollBox1: TScrollBox;
+    Rectangle1: TRectangle;
     procedure Button1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject); // Add IFrameInf
   private

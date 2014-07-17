@@ -13,6 +13,8 @@ object fmSearch: TfmSearch
     TabOrder = 0
     Width = 325.000000000000000000
     ItemAppearanceObjects.ItemObjects.Accessory.Visible = False
+    CanSwipeDelete = False
+    SearchAlwaysOnTop = False
   end
   object PrototypeBindSource1: TPrototypeBindSource
     AutoActivate = True

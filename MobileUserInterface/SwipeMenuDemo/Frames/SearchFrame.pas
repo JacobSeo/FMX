@@ -33,9 +33,12 @@ type
     procedure Search;
 
     { ISupportSwipeEvent }
-    procedure SwipeBegin(const AStartPos: TPointF; var AIsInterceptEvent: Boolean);
-    procedure Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
-    procedure SwipeEnd(const AEndPos: TPointF; var AIsInterceptEvent: Boolean);
+    procedure SwipeBegin(const AStartPos: TPointF; var Handled: Boolean);
+    procedure SwipeMove(const AMovePos: TPointF; var Handled: Boolean);
+    procedure SwipeEnd(const AEndPos: TPointF; var Handled: Boolean);
+
+  protected
+    function ObjectAtPoint(P: TPointF): IControl; override;
   public
     { Public declarations }
   end;
@@ -48,7 +51,8 @@ implementation
 
 procedure TfmSearch.CreateFrame;
 begin
-
+  // Swipe
+  ListView1.CanSwipeDelete := False;
 end;
 
 procedure TfmSearch.DestroyFrame;
@@ -72,6 +76,13 @@ begin
 
 end;
 
+function TfmSearch.ObjectAtPoint(P: TPointF): IControl;
+begin
+  Result := nil;
+  if ListView1.Enabled then
+    Result := inherited ObjectAtPoint(P);
+end;
+
 procedure TfmSearch.PauseWork;
 begin
 
@@ -92,22 +103,22 @@ begin
 
 end;
 
-procedure TfmSearch.Swipe(const APos: TPointF; var AIsInterceptEvent: Boolean);
-begin
-  AIsInterceptEvent := False;
-end;
-
 procedure TfmSearch.SwipeBegin(const AStartPos: TPointF;
-  var AIsInterceptEvent: Boolean);
+  var Handled: Boolean);
 begin
-  AIsInterceptEvent := False;
+  Handled := False;
   ListView1.Enabled := False;
 end;
 
-procedure TfmSearch.SwipeEnd(const AEndPos: TPointF;
-  var AIsInterceptEvent: Boolean);
+procedure TfmSearch.SwipeMove(const AMovePos: TPointF; var Handled: Boolean);
 begin
-  AIsInterceptEvent := False;
+  Handled := False;
+end;
+
+procedure TfmSearch.SwipeEnd(const AEndPos: TPointF;
+  var Handled: Boolean);
+begin
+  Handled := False;
   ListView1.Enabled := True;
 end;
 
