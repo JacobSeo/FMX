@@ -1,4 +1,4 @@
-program DrawerMenuDemo;
+program DrawerType2Demo;
 
 uses
   System.StartUpCopy,

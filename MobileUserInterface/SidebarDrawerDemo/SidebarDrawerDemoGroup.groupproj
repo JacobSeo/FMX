@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{814B83BE-989E-41E6-953C-F44C9B64641B}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Type1\DrawerType1Demo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Type2\DrawerType2Demo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="DrawerType1Demo">
+        <MSBuild Projects="Type1\DrawerType1Demo.dproj"/>
+    </Target>
+    <Target Name="DrawerType1Demo:Clean">
+        <MSBuild Projects="Type1\DrawerType1Demo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DrawerType1Demo:Make">
+        <MSBuild Projects="Type1\DrawerType1Demo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DrawerType2Demo">
+        <MSBuild Projects="Type2\DrawerType2Demo.dproj"/>
+    </Target>
+    <Target Name="DrawerType2Demo:Clean">
+        <MSBuild Projects="Type2\DrawerType2Demo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DrawerType2Demo:Make">
+        <MSBuild Projects="Type2\DrawerType2Demo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="DrawerType1Demo;DrawerType2Demo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="DrawerType1Demo:Clean;DrawerType2Demo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="DrawerType1Demo:Make;DrawerType2Demo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -11,9 +11,6 @@ Coordinates=189,10,57,51
 [lblTitle]
 Coordinates=127,10,47,51
 
-[Rectangle1]
-Coordinates=10,254,69,33
-
 [lytMenuHelper]
 Coordinates=263,10,85,33
 
@@ -21,7 +18,7 @@ Coordinates=263,10,85,33
 Coordinates=255,111,101,36
 
 []
-Coordinates=255,166,99,36
+Coordinates=10,254,69,33
 Visible=True
 
 [lytSidebar]
