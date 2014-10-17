@@ -1,3 +1,8 @@
+{
+  작성자 : 김현수(Humphery, Kim / http://blog.hfj.pe.kr / hjfactory@gmail.com)
+  소스설명 : http://blog.hjf.pe.kr/256
+  원소스 : https://github.com/hjfactory/FMX/tree/master/FeaturedFrames
+}
 unit WebBrowserFrame;
 
 interface

@@ -6,7 +6,7 @@ object frPhoto: TfrPhoto
   object Background: TRectangle
     Align = Contents
     Fill.Color = xFFA0A0A0
-    Opacity = 0.699999988079071000
+    Opacity = 0.699999988079071100
     Size.Width = 414.000000000000000000
     Size.Height = 493.000000000000000000
     Size.PlatformDefault = False
@@ -25,7 +25,7 @@ object frPhoto: TfrPhoto
       Align = Top
       Corners = [TopLeft, TopRight]
       Enabled = True
-      StyledSettings = [Family, Size, FontColor, Other]
+      StyledSettings = [Family, Size, Other]
       Margins.Left = 8.000000000000000000
       Margins.Right = 8.000000000000000000
       Position.X = 8.000000000000000000
@@ -45,7 +45,7 @@ object frPhoto: TfrPhoto
       Align = Top
       Corners = []
       Enabled = True
-      StyledSettings = [Family, Size, FontColor, Other]
+      StyledSettings = [Family, Size, Other]
       Margins.Left = 8.000000000000000000
       Margins.Top = 1.000000000000000000
       Margins.Right = 8.000000000000000000
@@ -65,7 +65,7 @@ object frPhoto: TfrPhoto
     object btnClear: TCornerButton
       Align = Top
       Corners = [BottomLeft, BottomRight]
-      StyledSettings = [Family, Size, FontColor, Other]
+      StyledSettings = [Family, Size, Other]
       Margins.Left = 8.000000000000000000
       Margins.Top = 1.000000000000000000
       Margins.Right = 8.000000000000000000

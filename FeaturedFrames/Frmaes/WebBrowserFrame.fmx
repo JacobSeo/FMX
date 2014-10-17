@@ -11,7 +11,8 @@ object frWebBrowser: TfrWebBrowser
     object lblURL: TLabel
       Align = Client
       StyledSettings = [Family, Style, FontColor]
-      Size.Width = 328.000000000000000000
+      Margins.Left = 5.000000000000000000
+      Size.Width = 323.000000000000000000
       Size.Height = 44.000000000000000000
       Size.PlatformDefault = False
       TextSettings.WordWrap = False
