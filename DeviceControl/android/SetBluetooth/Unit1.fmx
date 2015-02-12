@@ -1,0 +1,51 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 423
+  ClientWidth = 293
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 3
+  object Button1: TButton
+    Position.X = 24.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 209.000000000000000000
+    Size.Height = 44.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = #48660#47336#53804#49828' '#54876#49457#54868' '#54869#51064
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Position.X = 24.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 44.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = #54876#49457#54868
+    OnClick = Button2Click
+  end
+  object Button4: TButton
+    Position.X = 24.000000000000000000
+    Position.Y = 128.000000000000000000
+    Size.Width = 209.000000000000000000
+    Size.Height = 44.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = #48660#47336#53804#49828' '#44428#54620#54869#51064
+    OnClick = Button4Click
+  end
+  object Button3: TButton
+    Position.X = 136.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 97.000000000000000000
+    Size.Height = 44.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = #48708#54876#49457#54868
+    OnClick = Button3Click
+  end
+end
